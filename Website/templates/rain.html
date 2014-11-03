@@ -1,0 +1,199 @@
+{% extends "base.html" %}
+
+{% block heading %}
+    <title>Rain</title>
+    <meta charset="UTF-8" />
+    <meta name="google" content="notranslate" />
+    <meta http-equiv="Content-Language" content="en_US" />
+    <style nonce="{{nonce}}">
+        #rain-container {
+            position: relative;
+        }
+        
+        #phOverlay_landmark {
+            position: absolute;
+            left: 0px;
+            top: 53px;
+            display: none;
+        }
+        
+        #phOverlay_mrtstn {
+            position:absolute;
+            left: 20px;
+            top: 44px;
+            display: none;
+        }
+        
+        #phOverlay_hdbtown {
+            position: absolute;
+            left: 7px;
+            top: 40px;
+            display: none;
+        }
+        
+        #rain-label {
+            float: right;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="page-header">
+            <h1>Rain Areas</h1>
+        </div>
+        <div>
+            <div id="rain-container">
+                <img class="img-responsive" src="{{rain_img}}" />
+
+                <div id="phOverlay_landmark">
+                    <img class="img-responsive" src="/images/rainlocation_landmark.gif" />
+                </div>
+
+                <div id="phOverlay_mrtstn">
+                    <img class="img-responsive" src="/images/rainlocation_mrtstn.gif" />
+                </div>
+
+                <div id="phOverlay_hdbtown">
+                    <img class="img-responsive" src="/images/rainlocation_hdbtown.gif" />
+                </div>
+            </div>
+
+            <div id="legend_rain_intensities">
+                <img class="img-responsive" src="/images/legend_rain_intensities.gif" />
+            </div>
+
+            <div class="form-group">
+                <div class="radio-inline">
+                    <label class="checkbox-inline">
+                        <input id="landmark" type="radio" name="phOverlay" value="landmark">
+                        Landmarks
+                    </label>
+
+                    <label class="radio-inline">
+                        <input id="mrtstn" type="radio" name="phOverlay" value="mrtstn">
+                        MRT Stations
+                    </label>
+
+                    <label class="radio-inline">
+                        <input id="hdbtown" type="radio" name="phOverlay" value="hdbtown">
+                        HDB Town
+                    </label>
+                    <script nonce="{{nonce}}">
+                        $('#landmark').click(function() {checkOverlay()});
+                        $('#mrtstn').click(function() {checkOverlay()});
+                        $('#hdbtown').click(function() {checkOverlay()});
+                    </script>
+                </div>
+            </div>
+        </div>
+        {% if radar_maintenance %}
+            <div class="alert alert-danger">
+                {{ radar_maintenance }}
+            </div>
+        {% endif %}
+        <div class="alert alert-success">
+            <b>Last Updated:</b>
+                {{ last_updated.replace(second=0, microsecond=0) }}
+        </div>
+        
+        <div class="table-responsive">
+            <table class="table">
+                <tr class="danger">
+                    <th>12 Hour Weather Forecast:</th>
+                </tr>
+                <tr>
+                    <td>
+                        {{forecast}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        {{temperature|replace("o", "&deg;")|safe}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        {{humidity}}
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="table-responsive">
+            <table class="table">
+                <tr class="info">
+                    <th>Raining: 
+                        <span class="label label-primary" id="rain-label">Rain</span>
+                    </th>
+                </tr>
+                {% for area in areas %}
+                    {% if area.isRaining and area.rainStatus == "light" %}
+                        <tr>
+                            <td>
+                                {{ area.area }}
+                                &nbsp;
+                                <span class="label label-info">
+                                    {{ area.rainStatus }}
+                                </span>
+                                <img class="img-responsive" src="/images/780.png"/>
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+                
+                {% for area in areas %}
+                    {% if area.isRaining and area.rainStatus == "moderate" %}
+                        <tr>
+                            <td>
+                                {{ area.area }}
+                                &nbsp;
+                                <span class="label label-warning">
+                                    {{ area.rainStatus }}
+                                </span>
+                                <img class="img-responsive" src="/images/780.png"/>
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+                
+                {% for area in areas %}
+                    {% if area.isRaining and area.rainStatus == "heavy" %}
+                        <tr>
+                            <td>
+                                {{ area.area }}
+                                &nbsp;
+                                <span class="label label-danger">
+                                    {{ area.rainStatus }}
+                                </span>
+                                <img class="img-responsive" src="/images/783.png"/>
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+
+            <table class="table">
+                <tr class="active">
+                    <th>Not Raining: 
+                        <span class="label label-default" id="rain-label">No Rain</span>
+                    </th>
+                </tr>
+                {% for area in areas %}
+                    {% if not area.isRaining %}
+                        <tr>
+                            <td>
+                                {{ area.area }}
+                                {% if last_updated.hour > 19 %}
+                                <img class="img-responsive" src="/images/776.png"/>
+                                {% else %}
+                                <img class="img-responsive" src="/images/779.png"/>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}

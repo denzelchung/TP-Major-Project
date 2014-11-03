@@ -1,0 +1,93 @@
+{% extends "happenings-base.html" %}
+
+{% block additional_heading %}
+    <meta name="twitter:widgets:csp" content="on">
+    <link rel="stylesheet" href="/css/twitter-embedded.css">
+{% endblock %}
+
+{% block main_content %}
+    <div id="leaderboard" class="span3">
+        <div class="well sidebar-nav">
+            <ul class="nav nav-pills nav-stacked">
+                <li>
+                    <a>
+                        <span class="badge">Timeline</span>
+                    </a>
+                </li>
+                <li id="tweet-timeline">
+                    <a class="tweet-timeline">Timeline</a>
+                </li>
+                <hr>
+                <li>
+                    <a>
+                        <span class="badge">Near Me</span>
+                    </a>
+                </li>
+                {% if location %}
+                <li id="near_me">
+                    <a class="tweet-location" href="?q=near_me">{{location}}</a>
+                </li>
+                {% endif %}
+                <li id="Singapore">
+                    <a class="tweet-location" href="?q=Singapore">Singapore</a>
+                </li>
+                <hr>
+                <li>
+                    <a>
+                        <span class="badge">Trending Tweets</span>
+                    </a>
+                </li>
+                {% for trend in trending %}
+                    <li id="{{trend[0] | replace('#', 'hash') | replace(' ', '')}}">
+                        <a class="tweet-filter" href="?q={{trend[0] | replace('#', 'hash')}}">{{ trend[0] }}</a>
+                    </li>
+                {% endfor %}
+
+                <script nonce="{{nonce}}">
+                    function getParameterByName(name) {
+                        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+                        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                        results = regex.exec(location.search);
+                        return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+                    }
+                    
+                    window.onload = function() {
+                        $('#twitter-timeline').hide();
+                        var q = getParameterByName('q').replace(' ', '');
+                        var qId = q.replace('.', '');
+                        if (qId === null || qId == '') {
+                            qId = 'Singapore';
+                        }
+                        $('#' + qId).addClass('active');
+                    }
+                    
+                    $('#tweet-timeline').click(function() {
+                        $('#twitter-feed').hide();
+                        $('#twitter-timeline').show();
+                        $('#tweet-timeline').addClass('active');
+                        $('#tweet-timeline').siblings().removeClass('active');
+                    });
+                </script>
+            </ul>
+        </div>
+    </div>
+
+    <div id="content" class="span9">
+        <div id="twitter-feed">
+            {% for item in top_trending %}
+            <blockquote class="twitter-tweet">
+                <p>
+                    <a href="http://twitter.com/{{item['user']['screen_name']}}/statuses/{{item['id_str']}}">
+                    </a>
+                </p>
+            </blockquote>
+            {% endfor %}
+        </div>
+        
+        <div id="twitter-timeline">
+            <a class="twitter-timeline" height="600" href="https://twitter.com/denzelchung/lists/sg" data-widget-id="484229058138370048">Timeline</a>
+        </div>
+    </div>
+
+    <script nonce="{{nonce}}">!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+{% endblock %}
