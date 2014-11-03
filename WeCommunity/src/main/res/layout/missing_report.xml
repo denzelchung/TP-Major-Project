@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="23">
+
+    <LinearLayout
+        android:layout_width="0px"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:weightSum="8"
+        android:layout_weight="8"
+        android:id="@+id/linearLayout">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:layout_gravity="center">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/photoImage"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_launcher" />
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="invisible" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name"
+            android:layout_gravity="center"
+            android:id="@+id/nameTv"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Posted Date"
+            android:layout_gravity="center"
+            android:layout_marginTop="8px"
+            android:id="@+id/postedDateTv"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Posted Time"
+            android:layout_gravity="center"
+            android:layout_marginTop="3px"
+            android:id="@+id/postedTimeTv"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0px"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/linearLayout"
+        android:layout_marginLeft="20px"
+        android:layout_marginTop="10px"
+        android:layout_marginBottom="10px"
+        android:layout_weight="15"
+        android:weightSum="15">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Age"
+                android:id="@+id/ageTv"
+                android:layout_marginTop="10px"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ageTv"
+                android:text="Contact Number"
+                android:id="@+id/contactTv"
+                android:layout_marginTop="10px" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/contactTv"
+                android:text="Last Seen"
+                android:id="@+id/lastSeenTv"
+                android:layout_marginTop="10px"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lastSeenTv"
+                android:text="Last Seen Date and Time"
+                android:id="@+id/lastSeenDateTimeTv"
+                android:layout_marginTop="10px"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lastSeenDateTimeTv"
+                android:text="Additional Details"
+                android:id="@+id/additionalTv"
+                android:layout_marginTop="10px"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/additionalTv"
+                android:text="User"
+                android:id="@+id/userTv"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="16dp" />
+
+
+
+            <!-- TODO:
+                        Create TextViews with id:
+                            contactTv
+                            lastSeenTv
+                            lastSeenDateTv
+                            lastSeenTimeTv
+                            postedDateTv
+                            postedTimeTv
+                            userTv
+                            -->
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

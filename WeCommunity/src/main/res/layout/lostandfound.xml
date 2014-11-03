@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/handsback" >
+
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" >
+
+        <RelativeLayout android:id="@+id/RelativeLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="20dp">
+
+
+            <ImageButton
+                android:id="@+id/lostpetButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="50dp"
+                android:src="@drawable/lostpet2" />
+
+            <ImageButton
+                android:id="@+id/lostpeopleButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/lostpetButton"
+                android:layout_below="@+id/lostpetButton"
+                android:layout_marginTop="50dp"
+                android:src="@drawable/lostppl2" />
+
+
+
+            <ImageButton
+                android:id="@+id/lostbelongingButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/lostpetButton"
+                android:layout_below="@+id/lostpeopleButton"
+                android:layout_marginTop="50dp"
+                android:src="@drawable/belongings2" />
+
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>
