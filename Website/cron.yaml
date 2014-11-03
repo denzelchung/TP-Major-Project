@@ -1,0 +1,20 @@
+cron:
+- description: Twitter trending update
+  url: /happenings/twitter/update
+  schedule: every 30 mins synchronized
+  timezone: Asia/Singapore
+  
+- description: Twitter - NEA Haze update
+  url: /haze/update
+  schedule: every 30 mins synchronized
+  timezone: Asia/Singapore
+  
+- description: NEA Rain update
+  url: /rain/update
+  schedule: every 1 hours synchronized
+  timezone: Asia/Singapore
+  
+- description: Twitter - SingaporePolice crime update
+  url: /iwitness/update
+  schedule: every 1 hours synchronized
+  timezone: Asia/Singapore

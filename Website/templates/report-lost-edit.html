@@ -1,0 +1,138 @@
+{% extends "lost-base.html" %}
+
+{% block title %}
+    Report Lost
+{% endblock %}
+
+{% block body %}
+    <div class="page-header">
+        <h2 id="content-main-heading">Edit Report</h2>
+    </div>
+    {{ report.render(report.user, userType, lost_type) | safe }}
+    <br>
+    <div class="panel panel-body">
+        <form method="post" class="form-horizontal" 
+              id="lost-form" enctype="multipart/form-data"
+              role="form">
+            <input type="hidden" id="typeSelectHidden" name="reportType" value="{{ lost_type }}">
+            
+            {% if lost_type == "People" %}
+            <div class="form-group">
+                <label for="inputName" class="col-sm-2 control-label">Name</label>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" id="inputName" placeholder="Name" name="name" value="{{name}}">
+                </div>
+                <span class="help-block">{{error_name}}</span>
+            </div>
+            <div class="form-group">
+                <label for="inputAge" class="col-sm-2 control-label">Age</label>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" id="inputAge" placeHolder="Age" name="age" value="{{age}}">
+                </div>
+                <span class="help-block">{{error_age}}</span>
+            </div>
+            {% elif lost_type == "Pets" %}
+            <div class="form-group">
+                <label for="inputName" class="col-sm-2 control-label">Name</label>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" id="inputName" placeholder="Name" name="name" value="{{name}}">
+                </div>
+                <span class="help-block">{{error_name}}</span>
+            </div>
+            {% elif lost_type == "Belongings" %}
+            <div class="form-group">
+                <label for="inputName" class="col-sm-2 control-label">Item</label>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" id="inputName" placeholder="Item Name" name="name" value="{{name}}">
+                </div>
+                <span class="help-block">{{error_name}}</span>
+            </div>
+            {% endif %}
+            <div class="form-group">
+                <label for="inputPhoto" class="col-sm-2 control-label">Photo</label>
+                <div class="col-sm-3">
+
+                    <div class="fileinput fileinput-new" data-provides="fileinput">
+                        <div class="fileinput-new-thumbnail">
+                            <img class="img-responsive" data-src="holder.js/100%x100%">
+                        </div>
+                        <div class="fileinput-preview fileinput-exists thumbnail"></div>
+                        <div>
+                            <span class="btn btn-default btn-file">
+                                <span class="fileinput-new">
+                                    Upload
+                                </span>
+                                <span class="fileinput-exists">
+                                    Upload
+                                </span>
+                                <input type="file" id="inputPhoto" name="photo">
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inputLastSeenPlace" class="col-sm-2 control-label">Last Seen At</label>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" id="inputLastSeenPlace" placeholder="Last Seen At" name="lastSeenAt" value="{{last_seen_at}}">
+                </div>
+                <span class="help-block">{{error_last_seen_at}}</span>
+            </div>
+
+            <div class="form-group">
+                <label for="inputLastSeen" class="col-sm-2 control-label">Last Seen</label>
+                <div class="col-sm-3">
+                    <div class="input-group date form_datetime"
+                         data-link-field="inputLastSeen">
+                        <input type="text" class="form-control" value="{{last_seen}}" placeholder="Last Seen Time" readonly>
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-th">
+                            </span>
+                        </span>
+                    </div>
+                </div>
+                <span class="help-block">{{error_last_seen}}</span>
+                <input type="hidden" id="inputLastSeen" name="lastSeen" value="">
+            </div>
+
+            <div class="form-group">
+                <label for="inputContact" class="col-sm-2 control-label">Contact Details</label>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" id="inputContact" data-mask="99999999" placeholder="Contact Details" name="contact" value="{{contact}}">
+                </div>
+                <span class="help-block">{{error_contact}}</span>
+            </div>
+
+            <div class="form-group">
+                <label for="inputAdditional" class="col-sm-2 control-label">Additional Details</label>
+                <div class="col-sm-3">
+                    <textarea class="form-control" id="inputAdditional" placeholder="Additional Information" name="additional" rows="4">{{additional_details}}</textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-3">
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript" nonce="{{nonce}}">
+        $(".form_datetime").datetimepicker({
+            format: "dd MM yyyy - hh:ii",
+            weekStart: 1,
+            todayBtn:  1,
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 2,
+            forceParse: 0,
+            showMeridian: 1
+        });
+
+        $('#inputName').blur(function() {isEmpty($(this))});
+        $('#inputAge').blur(function() {isEmpty($(this))});
+        $('#inputLastSeenPlace').blur(function() {isEmpty($(this))});
+        $('#inputContact').blur(function() {isEmpty($(this))});
+    </script>
+{% endblock %}
