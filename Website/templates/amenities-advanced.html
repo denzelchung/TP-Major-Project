@@ -1,0 +1,101 @@
+<html>
+<head>
+    <title>Map</title>
+</head>
+<body>
+    <div id="map" style="width:600px;height:600px;margin-right:20px;float:left;"></div>
+    <div id="sidebar" style="width:300px;float:left;">
+        <form action="#" onsubmit="getAmenities(this.query.value, this.category.value);return false;">
+            <p>
+                <label style="width:70px;display:inline-block;">Address:</label>
+                <input type="text" size="30" name="query" value="Temasek Polytechnic"/>
+            </p>
+            <p>
+                <label style="width:70px;display:inline-block;">Category:</label>
+                <select name="category">
+                    <option value="supermarkets" selected=selected>Supermarkets</option>
+                    <option value="clinics">Clinics</option>
+                    <option value="postoffices">Post offices</option>
+                    <option value="schools">Schools</option>
+                    <option value="atms">ATMs</option>
+                    <option value="banks">Banks</option>
+                    <option value="petrolkiosks">Petrol Kiosks</option>
+                    <option value="busstops">Bus Stops</option>
+                    <option value="railstations">Rail Stations</option>
+                </select> 
+                <input type="submit" value="Get Amenities" style="margin-left:15px"/>
+            </p>
+        </form>
+        <div id="panel"></div>
+    <div>
+    <script type="text/javascript" src="http://gothere.sg/jsapi?sensor=false"></script>
+    <script type="text/javascript">
+        gothere.load("maps");
+        var geocoder;
+        var amenities;
+        var map;
+        function initialize() {
+            if (GBrowserIsCompatible()) {
+                // Create the Gothere map object.
+            	map = new GMap2(document.getElementById("map"));
+            	// Set the center of the map.
+            	map.setCenter(new GLatLng(1.362083, 103.819836), 11);
+            	// Add zoom controls on the top left of the map.
+            	map.addControl(new GSmallMapControl());
+            	// Add a scale bar at the bottom left of the map.
+            	map.addControl(new GScaleControl());
+            	
+            	geocoder = new GClientGeocoder();
+            	amenities = new GAmenities(map, document.getElementById("panel"));
+            }
+        }
+        
+        function getAmenities(query, category) {
+            map.closeInfoWindow();
+            amenities.clear();
+            map.clearOverlays();
+            var categoryToRequest;
+            switch(category) {
+                case "supermarkets":
+                    categoryToRequest = GAmenities.AMENITY_SUPERMARKET;
+                    break;
+                case "clinics":
+                    categoryToRequest = GAmenities.AMENITY_CLINIC;
+                    break;
+                case "postoffices":
+                    categoryToRequest = GAmenities.AMENITY_POST_OFFICE;
+                    break;
+                case "schools":
+                    categoryToRequest = GAmenities.AMENITY_SCHOOL;
+                    break;
+                case "atms":
+                    categoryToRequest = GAmenities.AMENITY_ATM;
+                    break;
+                case "banks":
+                    categoryToRequest = GAmenities.AMENITY_BANK;
+                    break;
+                case "petrolkiosks":
+                    categoryToRequest = GAmenities.AMENITY_PETROL_KIOSK;
+                    break;
+                case "busstops":
+                    categoryToRequest = GAmenities.AMENITY_BUS_STOP;
+                    break;
+                case "railstations":
+                default:
+                    categoryToRequest = GAmenities.AMENITY_RAIL_STATION;
+                    break;
+            }
+            amenities.clearCategories();
+            amenities.addCategory(categoryToRequest, GAmenities.LARGE_RESULTSET);
+            geocoder.getLatLng(query, function(latlng) {
+                if (latlng) {
+                    amenities.load(latlng);
+                    map.addOverlay(new GMarker(latlng));
+                }
+            });
+        }
+        
+        gothere.setOnLoadCallback(initialize);
+    </script>
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" href="/bootstrap/css/bootstrap-responsive.css">
+        <link rel="stylesheet" href="/css/jasny-bootstrap.css">
+        <link rel="stylesheet" href="/bootstrap/css/sticky-footer-navbar.css">
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <!--<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>-->
+        <script src="/js/bootstrap.min.js"></script>
+        <script src="/js/validate.js"></script>
+        <script src="/js/jasny-bootstrap.js"></script>
+        {% block heading %}
+        {% endblock %}
+        <script async type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-539fcffa71d845e0"></script>
+        <script async nonce={{nonce}}>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-52787305-1', 'auto');
+  ga('require', 'displayfeatures');
+  ga('require', 'linkid', 'linkid.js');
+  ga('send', 'pageview');
+        </script>
+    </head>
+    <body>
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+                <ul class="nav navbar-nav navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#header-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <div class="header-primary">
+                        <li>
+                            <a href="/" class="internal-home cen-logo">Unify</a>
+                            <li class="header-text">
+                                <a href="/">Unify</a>
+                            </li>
+                        </li>
+                    </div>
+                </ul>
+                
+                <div class="collapse navbar-collapse" id="header-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="" class="dropdown-toggle" data-toggle="dropdown">
+                                Weather
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-left text-center">
+                                <li>
+                                    <a href="/rain">Rain Areas</a>
+                                </li>
+                                <li>
+                                    <a href="/rain/map">Rain Map</a>
+                                </li>
+                                <li>
+                                    <a href="/haze">Haze</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="dropdown">
+                            <a href="" class="dropdown-toggle" data-toggle="dropdown">Lost <b class="caret"></b></a>
+                            <ul class="dropdown-menu dropdown-menu-left text-center">
+                                <li>
+                                    <a href="/lost/people">People</a>
+                                </li>
+                                <li>
+                                    <a href="/lost/pets">Pets</a>
+                                </li>
+                                <li>
+                                    <a href="/lost/belongings">Belongings</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="dropdown">
+                            <a href="" class="dropdown-toggle" data-toggle="dropdown">Happenings <b class="caret"></b></a>
+                            <ul class="dropdown-menu dropdown-menu-left text-center">
+                                <li>
+                                    <a href="/happenings/news">News</a>
+                                </li>
+                                <li>
+                                    <a href="/happenings/twitter">Twitter</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a href="/garden">Community Garden</a>
+                        </li>
+
+                        <li>
+                            <a href="/iwitness">iWitness</a>
+                        </li>
+
+
+                        <p class="navbar-text">|</p>
+                        {% if user %}
+                            <li class="dropdown">
+                                <a href="" class="dropdown-toggle" data-toggle="dropdown">
+                                    {{user.username}} 
+                                    <b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-left text-center">
+                                    <!-- add Profile, ... -->
+                                    <li>
+                                        <a href="/{{user.username}}">Profile</a>
+                                    </li>
+                                    <li>
+                                        <a href="/logout">Logout</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        {% else %}
+                            <li>
+                                <a href="/signin">Sign In</a>
+                            </li>
+                            <li>
+                                <a href="/signup">Sign Up</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="container header">
+            {% if (psi_check[1]|split_dash)[1]|int > 100 and (psi_check[1]|split_dash)[1]|int <= 200 %}
+            <div id="haze-warning" class="container">
+                <div class="alert alert-info alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" onclick="$('#haze-warning').remove();"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <strong>Warning!</strong> PSI level is unhealthy, you should reduce prolonged or strenuous outdoor physical exertion!
+                </div>
+            </div>
+            {% elif (psi_check[1]|split_dash)[1]|int > 200 and (psi_check[1]|split_dash)[1]|int <= 300 %}
+            <div id="haze-warning" class="container">
+                <div class="alert alert-warning alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" onclick="$('#haze-warning').remove();"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <strong>Warning!</strong> PSI level is very unhealthy, you should avoid prolonged or strenuous outdoor physical exertion!
+                </div>
+            </div>
+            {% elif (psi_check[1]|split_dash)[1]|int > 300 %}
+            <div id="haze-warning" class="container">
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" onclick="$('#haze-warning').remove();"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <strong>Warning!</strong> PSI level is hazardous, you should minimize or avoid outdoor activity!
+                </div>
+            </div>
+            {% endif %}
+            {% for holiday in holidays %}
+                {% if datetime_now + holiday_limit >= holiday.date and ((holiday.date - datetime_now)|string)[0] != "-" %}
+                    <div id="holiday-info" class="container">
+                        <div class="alert alert-info alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" onclick="$('#').remove();"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            {% if (holiday.date - datetime_now)|int > 0 %}
+                            Countdown to <strong>{{holiday.name}}</strong>: {{((holiday.date - datetime_now)|string)[0]}} more days!
+                            {% else %}
+                            {{holiday.name}}!
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+            {% block content %}
+            {% endblock %}
+        </div>
+        <div class="footer">
+            <div class="container">
+                <ul class="nav navbar-nav row" role="navigation">
+                    <div class="col">
+                        <div class="social-links">
+                            <h6 class="text-muted">Join the Community</h6>
+                            <ul>
+                                <li>
+                                    <a href="http://www.facebook.com/cenplusplus" class="facebook facebook-logo master-sprite">Facebook</a>
+                                </li>
+                                <li>
+                                    <a href="http://www.twitter.com/cenplusplus" class="twitter twitter-logo master-sprite">Twitter</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </body>
+</html>

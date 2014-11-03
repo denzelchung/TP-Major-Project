@@ -1,0 +1,76 @@
+application: cenplusplus
+version: 6
+runtime: python27
+api_version: 1
+threadsafe: yes
+
+default_expiration: "1d"
+
+handlers:
+# The following three handlers route requests to static resources: JS, CSS,
+# and HTML.
+- url: /js
+  static_dir: static/js
+
+- url: /css
+  static_dir: static/css
+
+- url: /bootstrap
+  static_dir: static/bootstrap
+
+- url: /images
+  static_dir: static/img
+  application_readable: true
+  
+- url: /api
+  static_files: templates/index.html
+  upload: templates/index\.html
+  
+- url: /favicon\.ico
+  static_files: favicon.ico
+  upload: favicon\.ico
+  
+# This handler routes requests to your APIs to your Endpoints code.
+# See https://developers.google.com/appengine/docs/python/endpoints/
+- url: /_ah/spi/.*
+  script: api.APPLICATION
+  
+- url: /happenings/twitter/update
+  script: main.app
+  login: admin
+  
+- url: /haze/update
+  script: main.app
+  login: admin
+  
+- url: /rain/update
+  script: main.app
+  login: admin
+  
+- url: /iwitness/update
+  script: main.app
+  login: admin
+  
+- url: /.*
+  script: main.app
+
+
+
+libraries:
+- name: webapp2
+  version: "2.5.2"
+  
+# You must include the Endpoints library if you wish to serve an API.
+- name: endpoints
+  version: 1.0
+
+# The pycrypto library is used for OAuth 2, and is also a requirement for
+# APIs that wish to authenticate users.
+- name: pycrypto
+  version: latest
+
+- name: jinja2
+  version: latest
+
+- name: PIL
+  version: "1.1.7"

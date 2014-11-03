@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block heading %}
+    <title>Haze</title>
+    <meta charset="UTF-8" />
+    <meta name="google" content="notranslate" />
+    <meta http-equiv="Content-Language" content="en_US" />
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="page-header">
+            <h1>Haze</h1>
+        </div>
+        {% if psi_three[1]|int <= 100 %}
+        <div class="alert alert-success" role="alert"><span class="label label-success">Good/Moderate</span>
+        {% elif psi_three[1]|int <= 200 %}
+        <div class="alert alert-info" role="alert"><span class="label label-info">Unhealthy</span>
+        {% elif psi_three[1]|int <= 300 %}
+        <div class="alert alert-warning" role="alert"><span class="label label-warning">Very Unhealthy</span>
+        {% else %}
+        <div class="alert alert-danger" role="alert"><span class="label label-danger">Hazardous</span>
+        {% endif %}
+            3-hour PSI at {{psi_three[0]}} is {{psi_three[1]}}.
+        </div>
+            
+        {% if (psi_twenty_four[1]|split_dash)[1]|int <= 100 %}
+        <div class="alert alert-success" role="alert"><span class="label label-success">Good/Moderate</span>
+        {% elif (psi_twenty_four[1]|split_dash)[1]|int <= 200 %}
+        <div class="alert alert-info" role="alert"><span class="label label-info">Unhealthy</span>
+        {% elif (psi_twenty_four[1]|split_dash)[1]|int <= 300 %}
+        <div class="alert alert-warning" role="alert"><span class="label label-warning">Very Unhealthy</span>
+        {% else %}
+        <div class="alert alert-danger" role="alert"><span class="label label-danger">Hazardous</span>
+        {% endif %}
+            24-hour PSI at {{psi_twenty_four[0]}} is {{psi_twenty_four[1]}}.
+        </div>
+            
+        <div class="table-responsive col-sm-3">
+            <table class="table">
+                <tr class="info">
+                    <th>PSI Range</th>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="label label-success">Good/Moderate</span>
+                        <span class="pull-right">
+                            &le; 100
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="label label-info">Unhealthy</span>
+                        <span class="pull-right">
+                            101 - 200
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="label label-warning">Very Unhealthy</span>
+                        <span class="pull-right">
+                            201 - 300
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="label label-danger">Hazardous</span>
+                        <span class="pull-right">
+                            &gt; 300
+                        </span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+            
+    </div>
+{% endblock %}
